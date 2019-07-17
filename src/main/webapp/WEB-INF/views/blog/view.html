@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>
+    <a href="/blogs">Customer list</a>
+</p>
+<table border="2px" th:width="400px">
+    <tr>
+        <td>ID</td>
+        <td>Name</td>
+        <td>Content</td>
+        <td>Category</td>
+        <td>Date</td>
+    </tr>
+
+    <tr>
+        <td th:text="${blog.id}"></td>
+        <td th:text="${blog.name}"></td>
+        <td th:text="${blog.content}"></td>
+        <td th:text="${blog.category.name}"></td>
+        <td th:text="${blog.createDate}"></td>
+
+</body>
+</html>
