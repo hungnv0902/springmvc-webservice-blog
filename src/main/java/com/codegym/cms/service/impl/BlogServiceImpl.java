@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 
 public class BlogServiceImpl implements BlogService {
 
@@ -34,8 +36,8 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public Page<Blog> findAllByCategory(Category category,Pageable pageable) {
-        return blogRepository.findAllByCategory(category, pageable);
+    public List<Blog> findAllByCategory(Category category) {
+        return blogRepository.findAllByCategory(category);
     }
 
 

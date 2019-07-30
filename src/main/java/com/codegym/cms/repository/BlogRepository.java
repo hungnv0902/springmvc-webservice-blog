@@ -8,10 +8,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import java.util.List;
 
 
 public interface BlogRepository extends PagingAndSortingRepository<Blog, Long> {
-    Page<Blog> findAllByCategory(Category category, Pageable pageable);
-    @Query("SELECT e FROM Blog e ORDER BY e.createDate ASC")
+    List<Blog> findAllByCategory(Category category);
     Page<Blog> findAll(Pageable pageable);
 }

@@ -1,6 +1,6 @@
 package com.codegym.cms;
-import com.codegym.cms.converter.StringToLocalDateConverter;
-import com.codegym.cms.formatter.*;
+
+import com.codegym.cms.formatter.CategoryFormatter;
 import com.codegym.cms.service.BlogService;
 import com.codegym.cms.service.CategoryService;
 import com.codegym.cms.service.impl.BlogServiceImpl;
@@ -31,19 +31,16 @@ import org.thymeleaf.templatemode.TemplateMode;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.util.HashSet;
 import java.util.Properties;
-import java.util.Set;
-
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 
 
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
-@EnableJpaRepositories("com.codegym.cms.repository")
-@ComponentScan("com.codegym.cms")
 @EnableSpringDataWebSupport
+@ComponentScan("com.codegym.cms")
+@EnableJpaRepositories("com.codegym.cms.repository")
 public class ApplicationConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
@@ -53,21 +50,9 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
         registry.addFormatter(new CategoryFormatter(applicationContext.getBean(CategoryService.class)));
     }
 
-
-
-
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
-    }
-    @Bean
-    public CategoryService provinceService() {
-        return new CategoryServiceImpl();
-    }
-
-    @Bean
-    public BlogService customerService(){
-        return new BlogServiceImpl();
     }
 
 
@@ -94,7 +79,6 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     public ThymeleafViewResolver viewResolver(){
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
-        viewResolver.setCharacterEncoding("UTF-8");
         return viewResolver;
     }
 
@@ -121,7 +105,7 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/ungdungblog");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/blog");
         dataSource.setUsername("root");
         dataSource.setPassword("123456a@");
         return dataSource;
@@ -142,11 +126,15 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     }
 
     @Bean
-    public Set<StringToLocalDateConverter> converters() {
-        Set<StringToLocalDateConverter> converters = new HashSet<StringToLocalDateConverter>();
-        converters.add(new StringToLocalDateConverter("MM-dd-yyyy"));
-        return converters;
-
-
+    public CategoryService getCustomerRepository() {
+        return new CategoryServiceImpl();
     }
+
+    @Bean
+    public BlogService getBlogService() {
+        return new BlogServiceImpl();
+    }
+
+
+
 }

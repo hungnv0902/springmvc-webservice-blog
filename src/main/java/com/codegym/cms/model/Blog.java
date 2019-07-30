@@ -1,6 +1,7 @@
 package com.codegym.cms.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -15,8 +16,6 @@ public class Blog {
     private Long id;
     private String name;
     private String content;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date createDate;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -24,10 +23,9 @@ public class Blog {
     public Blog() {
     }
 
-    public Blog(String name, String content,Date createDate) {
+    public Blog(String name, String content) {
         this.name = name;
         this.content = content;
-        this.createDate = createDate;
     }
 
     @Override
@@ -39,13 +37,8 @@ public class Blog {
         return id;
     }
 
-    public Date getCreateDate() {
-        return createDate;
-    }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
+
 
     public void setId(Long id) {
         this.id = id;
